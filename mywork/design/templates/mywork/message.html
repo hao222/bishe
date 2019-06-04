@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load pagetag %}
+{% block css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/score.css' %}">
+{% endblock %}
+
+
+{% block right11 %}
+<div class="a">
+    <p>•消息通知</p>
+    <table class="table table-striped" style="margin-top: 50px;">
+        {% for comment in comment_list %}
+            <tr>
+                <td><span style="color:#2e6da4;">{{ comment.user }}</span>评论了你的<span style="color:#2e6da4;">{{ comment.article }}</span></td>
+                <td>{{ comment.send_time }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<nav aria-label="Page navigation" class="d">
+    <ul class="pagination">
+        {% if comment_list.has_previous  %}
+          <li>
+              <a href="?page={{ comment_list.previous_page_number }}" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+              </a>
+          </li>
+        {% endif %}
+        {% for pg in comment_list.paginator.page_range %}
+            {% circle_page comment_list.number pg %}
+        {% endfor %}
+        {% if comment_list.has_next %}
+            <li>
+                <a href="?page={{ comment_list.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+<div class="e">
+    <form action="{% url 'design:message' %}" method="post" class="form-horizontal">
+        {% csrf_token %}
+        <div class="form-group">
+            <div class="col-sm-3">
+                <input type="text" name="tt" value="{{ page|default:'1' }}" class="form-control">
+             </div>
+            <div class="col-sm-2">
+                <input type="submit" class="btn btn-primary " value="确定">
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

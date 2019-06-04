@@ -1,0 +1,221 @@
+{% load static %}
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>非凡注册</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/default.css">
+    <link rel="stylesheet" href="/static/css/materialize.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+        <!-- logo 标识-->
+    <link rel="Bookmark" href="{% static 'images/log.png' %}" >
+    <link rel="Shortcut Icon" href="{% static 'images/log.png' %}" />
+
+    <style type="text/css">
+        html, body {
+            height: 100%;
+        }
+        html {
+            display: table;
+            margin: auto;
+        }
+        body {
+            width:500px;
+            display: table-cell;
+            vertical-align: middle;
+
+        }
+        .margin {
+            margin: 0 !important;
+        }
+        .card-panel{
+            background:#f7f7f7 ;
+
+        }
+        .row .col.s5{
+            margin-left: 5%;
+        }
+        #content{
+            margin-left: 40%;
+            color:green;}
+        #content.warning{
+            color: red;}
+    </style>
+
+</head>
+<body style="background:url('{% static 'img/re.png' %}') no-repeat fixed;background-size:cover;">
+<div id="login-page" class="row">
+    <div class="col s12 z-depth-6 card-panel">
+        <form action="{% url 'design:register_check' %}" method="post" class="login-form">
+            {% csrf_token %}
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a href="{% url 'design:home' %}"><img src="{% static 'img/log.png' %}" alt="非凡策划有限公司" style="border-radius: 20px;" class="responsive-img valign profile-image-login"></a>
+                    <p class="center login-form-text">非凡策划</p>
+                </div>
+            </div>
+            <div class="row margin">
+                <div class="input-field col s12">
+                    {#	            <i class="mdi-social-person-outline prefix"></i>#}
+                    <input id="username" type="text" class="validate username" name="username">
+                    <label for="username" class="center-align">用户名</label>
+                </div>
+                <span id="content"></span>
+            </div>
+            <div class="row margin">
+                <div class="input-field col s12">
+                    {#	            <i class="mdi-communication-email prefix"></i>#}
+                    <input id="phone" type="text" class="validate phone" name="phone">
+                    <label for="phone" class="center-align">手机号</label>
+                </div>
+            </div>
+            <div class="row margin" style="margin-left: 5%;">
+                <div class="input-field col s6">
+                    <input type="text" name="code" id="code1" class="validate">
+                    <label for="code1">请输入验证码</label>
+                </div>
+                <input class="btn btn-success" id="code" type="button" value="获取验证码" onclick="settime(this)">
+            </div>
+
+            <div class="row margin">
+                <h4 style="background-color:#f0f4c3;color:red; position:absolute; font-weight: inherit; font-size: 16px;left: 50%;">{{ msg }}</h4>
+                <div class="input-field col s12">
+                    {#	            <i class="mdi-action-lock-outline prefix"></i>#}
+                    <input id="pwd" type="password" class="validate pwd" name="pwd">
+                    <label for="pwd">密码(字母+数字6-12)</label>
+
+                </div>
+            </div>
+            <div class="row margin">
+                <div class="input-field col s12">
+                    {#	            <i class="mdi-action-lock-outline prefix"></i>#}
+                    <input id="password-again" type="password" name="rpwd" class="validate">
+                    <label for="password-again">请再次输入密码</label>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <button type="submit" class="btn waves-effect waves-light col s12">立刻注册</button>
+                </div>
+                <div class="input-field col s12">
+                    <p class="margin center medium-small sign-up">已经有了账号? <a href="{% url 'design:login' %}">登录</a></p>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" src="/static/js/jquery-3.3.1.js"></script>
+<script src="/static/js/materialize.min.js"></script>
+<script>
+var wait=60;
+function time(o) {
+        if (wait == 0) {
+            o.removeAttribute("disabled");
+            o.value="免费获取验证码";
+            wait = 60;
+        } else {
+            o.setAttribute("disabled", true);
+            o.value="重新发送(" + wait + ")";
+            wait--;
+            setTimeout(function() {
+                time(o)
+            },
+            1000)
+        }
+    }
+document.getElementById("code").onclick=function(){time(this);}
+</script>
+<script>
+    $('#code').click(function () {
+        $.ajax({
+            type:'post',
+            url:'{% url 'design:code' %}',
+            data:{'phone':$('#phone').val()},
+            success:function (data1) {
+                console.log(data1);
+                if (data1['status_code']==0){
+                    $('#yzm').html(data1['yzm']);
+                }
+            }
+        });
+    });
+
+    $('body').click(function (e) {
+        $('span').html('');
+        $('h4').html('');
+    });
+
+    $(".phone").on('input propertychange',function () {
+        var value = $(this).val();
+        var uPattern = /^1[34578]\d{9}$/;
+        if (uPattern.test(value)){
+            $.ajax({
+                url:"{% url 'design:phone_check' %}?phone="+value,
+                success:function (data) {
+                    if (data.status !=1){
+                        $("#content").addClass('warning');
+                    }else{
+                        $("#content").removeClass('warning');
+                    }
+                    $("#content").html(data.msg);
+                }
+            });
+        }
+        else{
+            $("#content").text("请输入正确的手机号");
+        }
+    });
+    $(".username").on('input propertychange',function () {
+        var value = $(this).val();
+        var uPattern = /^[a-zA-Z]{1,}[a-zA-Z0-9_]{3,8}$/;
+        if (uPattern.test(value)){
+            $.ajax({
+                url:"{% url 'design:user_check' %}?username="+value,
+                success:function (data) {
+                    if (data.status !=1){
+                        $("#content").addClass('warning');
+                    }else{
+                        $("#content").removeClass('warning');
+                    }
+                    $("#content").html(data.msg);
+                }
+            });
+        }
+        else{
+            $("#content").text("输入以字母开头4-8位数字字母下划线组合的字符");
+        }
+    });
+    $('form').submit(function (e) {
+        if (!$('#username').val()){
+            alert("用户名不为空!");
+            $('#username').focus();
+            return false;
+        }
+        if (!$('#phone').val()){
+            alert("手机号不能为空!");
+            $('#phone').focus();
+            return false;
+        }
+        if (!$('#pwd').val()){
+            alert("密码不能为空!");
+            $('#pwd').focus();
+            return false;
+        }
+        if (!$('#code1').val()){
+            alert("验证码不能为空!");
+            $('#code1').focus();
+            return false;
+        }
+
+    });
+    $('#username').val("{{ username }}");
+    $('#phone').val("{{ phone }}");
+    $('#pwd').val("{{ password1 }}");
+</script>
+</body>
+</html>

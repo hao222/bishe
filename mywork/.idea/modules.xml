@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../gzsx/cms/.idea/cms.iml" filepath="$PROJECT_DIR$/../gzsx/cms/.idea/cms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../gzsx/.idea/gzsx.iml" filepath="$PROJECT_DIR$/../gzsx/.idea/gzsx.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/mywork.iml" filepath="$PROJECT_DIR$/.idea/mywork.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../osroom/.idea/osroom.iml" filepath="$PROJECT_DIR$/../osroom/.idea/osroom.iml" />
+      <module fileurl="file://E:/pachong/.idea/pachong.iml" filepath="E:/pachong/.idea/pachong.iml" />
+    </modules>
+  </component>
+</project>

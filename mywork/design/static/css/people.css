@@ -1,0 +1,20 @@
+.a p:nth-child(1){
+    font-weight: bold;
+    font-size: 22px;
+    margin-top: 21px;
+    margin-left: 30px;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+}
+.a p:nth-child(2){
+    font-weight: bold;
+    margin-left: 78px;
+}
+.a p:nth-child(2)>a{
+    margin-left: 20px;
+}
+.rows{
+    margin-top: 8%;
+    margin-left: 15%;
+}
+

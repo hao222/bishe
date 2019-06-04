@@ -1,0 +1,149 @@
+﻿{% load static %}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <link rel="stylesheet" type="text/css" href="{% static 'h-ui/css/H-ui.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'h-ui.admin/css/H-ui.admin.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'lib/Hui-iconfont/1.0.8/iconfont.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'h-ui.admin/skin/default/skin.css' %}" id="skin" />
+    <link rel="stylesheet" type="text/css" href="{% static 'h-ui.admin/css/style.css' %}" />
+
+    <title>系统日志</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
+    <span class="c-gray en">&gt;</span>
+    系统管理
+    <span class="c-gray en">&gt;</span>
+    系统日志
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px;border-radius: 10px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+<div class="page-container" style="margin-left:30%;">
+    <form action="{% url 'adminmywork:system_log' %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="title" id="" placeholder="日志名称,id" style="width:250px;border-radius: 10px" class="input-text">
+        <input type="hidden" name="search" value="true">
+        <button name="" id="" class="btn btn-success" type="submit" style="border-radius: 10px"><i class="Hui-iconfont">&#xe665;</i> 搜日志</button>
+    </form>
+</div>
+<div class="cl pd-5 bg-1 bk-gray mt-20">
+		<span class="l">
+		<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+		</span>
+    <span class="r">共有数据：<strong>{{ systemlogs.count }}</strong> 条</span>
+</div>
+<table class="table table-border table-bordered table-bg table-hover table-sort">
+    <thead>
+    <tr class="text-c">
+        <th width="25"><input type="checkbox" name="" value=""></th>
+        <th width="80">ID</th>
+        <th width="100">类型</th>
+        <th>内容</th>
+        <th width="17%">用户名</th>
+        <th width="120">客户端IP</th>
+        <th width="120">时间</th>
+        <th width="70">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for systemlog in systemlogs %}
+        <tr class="text-c">
+            <td><input type="checkbox" value="{{ systemlog.id }}" name=""></td>
+            <td>{{ systemlog.id }}</td>
+            <td>{{ systemlog.user_id }}</td>
+            <td>{{ systemlog.content }}</td>
+            <td>{{ systemlog.username }}</td>
+            <td>{{ systemlog.IP }}</td>
+            <td>{{ systemlog.pu_date }}</td>
+            <td>
+                <a title="删除" href="javascript:;" onclick="system_log_del(this,{{ systemlog.id }})" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+            </td>
+        </tr>
+    {% endfor %}
+
+
+    </tbody>
+</table>
+<div id="pageNav" class="pageNav"></div>
+</div>
+
+<script type="text/javascript" src="{% static 'lib/jquery/1.9.1/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'lib/layer/2.4/layer.js' %}"></script>
+<script type="text/javascript" src="{% static 'h-ui/js/H-ui.js' %}"></script>
+<script type="text/javascript" src="{% static 'h-ui.admin/js/H-ui.admin.js' %}"></script>
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="{% static 'lib/My97DatePicker/4.8/WdatePicker.js' %}"></script>
+<script type="text/javascript" src="{% static 'lib/datatables/1.10.0/jquery.dataTables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'lib/laypage/1.2/laypage.js' %}"></script>
+<script type="text/javascript">
+    $('.table-sort').dataTable({
+        "lengthMenu":false,//显示数量选择
+        "bFilter": false,//过滤功能
+        "bPaginate": false,//翻页信息
+        "bInfo": false,//数量信息
+        "aaSorting": [[ 1, "desc" ]],//默认第几个排序
+        "bStateSave": true,//状态保存
+        "aoColumnDefs": [
+            //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+            {"orderable":false,"aTargets":[0,7]}// 制定列不参与排序
+        ]
+    });
+    /*日志-删除*/
+    function system_log_del(obj,id){
+        layer.confirm('确认要删除吗？',function(index){
+            $.ajax({
+                type: 'get',
+                url: '{% url "adminmywork:systemlog_delete" %}?s_id='+id,
+                dataType: 'json',
+                success: function(data){
+                    if (data.status == 1){
+                        $(obj).parents("tr").remove();
+                        layer.msg(data.msg,{icon:1,time:1000}, function () {
+                            location.reload();
+                        });
+                    }else{
+                        layer.msg(data.msg,{icon:6,time:1000});
+                    }
+                },
+                error:function(data) {
+                    console.log(data.msg);
+                },
+            });
+        });
+    }
+
+    //批量删除..................
+    function datadel(){
+        layer.confirm('确认要删除吗？',function(index){
+            var id_list = "";
+            $("tbody input:checked").each(function (i,e) {
+                id_list +=$(e).val() +',';
+                {#id_str = id_str.replace(/,$/, '');#}
+            });
+            //ajax传参数  可以放在url后面   也可以给一个data字典
+            $.ajax({
+                type:'get',
+                url:'{% url "adminmywork:system_log_alldel" %}?sid='+id_list,
+                success:function (data) {
+                    if (data.status == 1){
+                        $("tbody input:checked").parents('tr').remove();
+                        layer.msg(data.msg,{icon:1,time:1000}, function () {
+                            location.reload();
+                        });
+                    }else{
+                        layer.msg(data.msg,{icon:6,time:1000});
+                    }
+                } ,
+            });
+        });
+    }
+</script>
+</body>
+</html>

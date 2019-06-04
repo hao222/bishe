@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>非凡F/F登录</title>
+    {% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="/static/css/default.css">
+	<link rel="stylesheet" href="/static/css/materialize.min.css">
+        <!-- logo 标识-->
+    <link rel="Bookmark" href="{% static 'images/log.png' %}" >
+    <link rel="Shortcut Icon" href="{% static 'images/log.png' %}" />
+
+	<style type="text/css">
+
+	html,body {
+	    height: 100%;
+	}
+	html {
+	    display: table;
+	    margin: auto;
+	}
+	body {
+        margin-left: 50% !important;
+        width: 500px;
+	    display: table-cell;
+	    vertical-align: middle;
+	}
+
+    .card-panel{
+        background:#fff;
+        opacity: 0.7;
+    }
+	</style>
+</head>
+<body style="background:url('{% static 'img/2.png' %}') no-repeat fixed;background-size:cover;">
+<div id="login-page" class="row">
+    <div class="col s12 z-depth-6 card-panel">
+        <form class="login-form" action="{% url 'design:login' %}" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="input-field col s12 center">
+                     <a href="{% url 'design:home' %}"><img src="{% static 'img/log.png' %}" alt="非凡策划有限公司" style="border-radius: 20px;" class="responsive-img valign profile-image-login"></a>
+                    <p class="center login-form-text">非凡策划</p>
+                </div>
+            </div>
+            <div class="row margin">
+                <div class="input-field col s12">
+{#                    <i class="mdi-social-person-outline prefix"></i>#}
+                    <input class="validate" id="username" type="text" name="username" value="">
+                    <label for="username" data-error="wrong" data-success="right" class="center-align">用户名</label>
+                </div>
+            </div>
+            <div class="row margin" style="margin-top: 5%;">
+                <div class="input-field col s12">
+{#                    <i class="mdi-action-lock-outline prefix"></i>#}
+                    <input id="password" type="password" name="password" value="">
+                    <label for="password">密码</label>
+                </div>
+                <span style="background: #36f485;color:#ec00a5;margin-left:10%;">{{ msg }}</span>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m12 l12  login-text">
+                    <input type="checkbox" id="remember-me" name="rember" />
+                    <label for="remember-me">记住我</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <button type="submit" class="btn waves-effect waves-light col s12">登　录</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6 m6 l6">
+                    <p class="margin medium-small"><a href="{% url 'design:register' %}">现在注册!</a></p>
+                </div>
+                <div class="input-field col s6 m6 l6">
+                    <p class="margin right-align medium-small"><a href="{% url 'design:forget_pwd' %}">忘记密码?</a></p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="/static/js/jquery-3.3.1.js"></script>
+<script src="/static/js/materialize.min.js"></script>
+<script>
+
+    if ('{{ username }}' != ""){
+            $("#remember-me").attr("checked",true);
+            $("#password").val("{{ password }}");
+            $("#username").val("{{ username }}");
+        }
+         $('form').submit(function (e) {
+            if (!$('#username').val()){
+                alert("用户名不为空!");
+                $('#username').focus();
+                return false;
+             }
+              if (!$('#password').val()){
+                alert("密码不为空!");
+                $('#password').focus();
+                return false;
+             }
+         });
+    $('body').click(function (e) {
+       $('span').html('');
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>base</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base1.css' %}">
+    <!-- logo 标识-->
+    <link rel="Bookmark" href="{% static 'images/log.png' %}" >
+    <link rel="Shortcut Icon" href="{% static 'images/log.png' %}" />
+
+    {% block css %}
+
+    {% endblock css %}
+</head>
+<body>
+    <div id="top">
+        <div id="top1">
+            <a href="{% url 'design:home' %}" class="a1"><img src="{% static 'images/logo.png' %}" alt="首页" style="height: 60px"></a>
+        <div id="top2">
+            {% block right1 %}
+                <a href="{% url 'design:publish' %}">发布内容</a>&nbsp;
+            {% endblock %}
+            {% block right2 %}
+                <a href="{% url 'design:people' %}"><img src="/media/{{ user1.photo }}" class="img-circle" style="width: 34px;height: 34px;"></a>
+            {% endblock %}
+        </div>
+
+        </div>
+    </div>
+    <div id="content">
+        <div id="content1">
+            {% block content1 %}{% endblock %}
+        </div>
+        <div id="content2">
+            {% block content2 %}{% endblock %}
+        </div>
+    </div>
+{% block func %}
+{% endblock %}
+</body>
+</html>
+<script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+{% block js %}
+
+{% endblock %}

@@ -1,0 +1,116 @@
+{% load static %}
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>foregt_pwd</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/default.css">
+	<link rel="stylesheet" href="/static/css/materialize.min.css">
+        <!-- logo 标识-->
+    <link rel="Bookmark" href="{% static 'images/log.png' %}" >
+    <link rel="Shortcut Icon" href="{% static 'images/log.png' %}" />
+
+	<style type="text/css">
+	html,
+	body {
+	    height: 100%;
+	}
+	html {
+	    display: table;
+	    margin: auto;
+	}
+	body {
+        width: 500px;
+	    display: table-cell;
+	    vertical-align: middle;
+	}
+	</style>
+</head>
+<body class="yellow" style="opacity: 0.8;">
+	<div id="login-page" class="row">
+	    <div class="col s12 z-depth-6 card-panel">
+	      <form class="login-form" action="{% url 'design:forget_pwd' %}" method="post">
+          {% csrf_token %}
+	        <div class="row">
+	          <div class="input-field col s12 center">
+	             <img src="{% static 'img/log.png' %}" alt="非凡策划有限公司" style="border-radius: 20px;" class="responsive-img valign profile-image-login">
+	            <p class="center login-form-text">非凡策划</p>
+	          </div>
+
+	        </div>
+              <div class="row margin">
+                  <div class="input-field col s6">
+{#                      <i class="mdi-communication-email prefix"></i>#}
+                      <input class="validate" id="phone" type="text" name="phone">
+                      <label for="phone" data-error="wrong" data-success="right" class="center-align">手机号</label>
+                      <span style="background-color:#f0f4c3;color:#0D47A1; position:absolute; font-weight: bold; font-size: 18px;left: 10%;">{{ msg }}</span>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="input-field col s6">
+                      <input type="text" name="code" id="code1" class="validate">
+                      <label for="code1">请输入验证码</label>
+                  </div>
+                  <input class="btn btn-success" id="code" type="button" value="获取验证码" onclick="settime(this)">
+              </div>
+	        <div class="row">
+	          <div class="input-field col s12">
+	            <button type="submit" class="btn waves-effect waves-light col s12">重置密码</button>
+	          </div>
+	        </div>
+	        <div class="row">
+	          <div class="input-field col s6 m6 l6">
+	            <p class="margin medium-small"><a href="{% url 'design:register' %}">立刻注册!</a></p>
+	          </div>
+	          <div class="input-field col s6 m6 l6">
+	              <p class="margin right-align medium-small"><a href="{% url 'design:login' %}">登录</a></p>
+	          </div>          
+	        </div>
+	      </form>
+	    </div>
+
+	  </div>
+	<script src="/static/js/jquery-3.3.1.js"></script>
+  	<!--materialize js-->
+  	<script src="/static/js/materialize.min.js"></script>
+    <script>
+        var wait=60;
+        function time(o) {
+            if (wait == 0) {
+                o.removeAttribute("disabled");
+                o.value="免费获取验证码";
+                wait = 60;
+            } else { // www.jbxue.com
+                o.setAttribute("disabled", true);
+                o.value="重新发送(" + wait + ")";
+                wait--;
+                setTimeout(function() {
+                        time(o)
+                    },
+                    1000)
+            }
+        }
+        document.getElementById("code").onclick=function(){time(this);}
+    </script>
+    <script>
+        $('#code').click(function () {
+           $.ajax({
+               type:'post',
+               url:'{% url 'design:code' %}',
+               data:{'phone':$('#phone').val()},
+               success:function (data1) {
+                   console.log(data1);
+                   if (data1['status_code']==0){
+                       $('#yzm').html(data1['yzm']);
+                   }
+               }
+           });
+        });
+        $('html').click(function () {
+           $('span').html('');
+        });
+    </script>
+</body>
+</html>

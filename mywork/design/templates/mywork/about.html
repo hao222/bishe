@@ -1,0 +1,266 @@
+{% load static %}
+{% load news_tag %}
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>About </title>
+        <link rel="Bookmark" href="{% static 'images/log.png' %}" >
+        <link rel="Shortcut Icon" href="{% static 'images/log.png' %}" />
+
+		<link href="{% static 'css/bootstrap.css' %}" rel='stylesheet' type='text/css' />
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		 <!-- Custom Theme files -->
+		<link href="{% static 'css/style.css' %}" rel='stylesheet' type='text/css' />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/magnific-popup.css' %}">
+		 <!-- Custom Theme files -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="keywords" content="非凡营销策划公司官网，医药营销策划，保健品营销策划，食品营销策划，品牌策划设计公司，15年精于大健康、大食品、大农业营销策划，电话1568888888"/>
+		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+
+		<script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+		 <!-- start-smoth-scrolling-->
+		<script type="text/javascript" src="{% static 'js/move-top.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/easing.js' %}"></script>
+
+		<script type="text/javascript" src="{% static 'js/modernizr.custom.53451.js' %}"></script>
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$(".scroll").click(function(event){		
+					event.preventDefault();
+					$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+				});
+			});
+		</script>
+		 <!--start-smoth-scrolling-->
+		<!--webfonts-->
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+		<!--//webfonts-->
+		<!--start-top-nav-script-->
+		<script>
+			$(function() {
+				var pull 		= $('#pull');
+					menu 		= $('nav ul');
+					menuHeight	= menu.height();
+				$(pull).on('click', function(e) {
+					e.preventDefault();
+					menu.slideToggle();
+				});
+				$(window).resize(function(){
+	        		var w = $(window).width();
+	        		if(w > 320 && menu.is(':hidden')) {
+	        			menu.removeAttr('style');
+	        		}
+	    		});
+			});
+		</script>
+		<!--//End-top-nav-script-->
+	</head>
+	<body>
+		<!-- start-header-->
+			<div class="header-top">
+				<div class="container">
+					<div class="top-header">
+						<div class="logo">
+							<a href="{% url 'design:home' %}"><img src="{% static 'images/logo.png' %}" alt=""></a>
+						</div>
+						<!--start-top-nav-->
+							<!--start-top-nav-->
+						 <nav class="top-nav">
+							<ul class="top-nav">
+                                <li><a href="{% url 'design:home' %}">主页</a></li>
+                                <li><a href="{% url 'design:about' %}"> 关于</a></li>
+                                <li><a href="{% url 'design:article' "" %}">案例 </a></li>
+                                <li><a href="{% url 'design:connect' %}">联系</a></li>
+
+							</ul>
+							<a href="#" id="pull"><img src="{% static 'images/menu-icon.png' %}" title="menu" /></a>
+						</nav>
+
+						<!-- start search-->
+				   			<div class="clearfix"></div>
+					</div>
+ 					 <div class="main-search">
+            <form action="http://www.baidu.com" target="_blank">
+                <input type="text" value="百度搜索" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = '百度搜索';}" class="text"/>
+                <input type="submit" value=""/>
+            </form>
+            <form action="{% url 'design:article_search' "" %}" class="form-horizontal form1">
+                <input type="text" placeholder="经典案例" name="qq">
+                <input type="submit" class="" value="">
+            </form>
+            <div class="close"><img src="{% static 'images/cross.png' %}" /></div>
+        </div>
+		    			<div class="srch" style="width: 100%;">
+                            <button></button>
+                            <div class="div1">
+                                {% if user1 %}
+                                    <a href="{% url 'design:publish' %}" class="btn btn-primary a1" style="padding:0;">发布内容 </a>
+                                    <span style="color:white">|</span>
+                                    <a href="{% url 'design:people' %}"><img src="/media/{{ user1.photo }}" class="img-circle" style="width: 34px;height: 34px; border-radius: 10px"> <span style="color:white"> | </span></a>
+                                    <a href="{% url 'design:log_out' %}" class="btn btn-primary a1" style="padding:0;">退出登录</a>
+                                {% else %}
+                                    <a href="{% url 'design:login' %}" class="a1 btn btn-primary" style="padding:0;"> 登录 </a>
+                                    <span style="color:white">&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</span>
+                                    <a href="{% url 'design:register' %}" class="a1 btn btn-primary" style="padding:0;"> 注册</a>
+                                {% endif %}
+                            </div>
+                        </div>
+						<script type="text/javascript">
+					         $('.main-search').hide();
+					        $('button').click(function (){
+					            $('.main-search').toggle();
+					            $('.main-search text').focus();
+					        }
+					        );
+					        $('.close').click(function(){
+					            $('.main-search').hide();
+					        });
+					    </script>
+						<div class="clearfix"></div>
+					</div>
+			</div>
+			<div class="about-section">
+						<div class="container">
+				<div class="about-grids">
+								<div class="col-md-9 about-left div_about">
+									<h1 style="color:#d0d0d0">-------------------------------------+ <span style="color:red">关于我们</span>  +----------------------------------</h1>
+									<p id="history">非凡策划有限公司——中国健康产业策划，创办于郑州市，注册资金一千万元人民币。创始人张三先生，有15年以上的健康产业营销策划经验。公司由市调、文案、策划、设计、推广、招商、客服、讲师等职位组成，公司成员均科班出身，均十年左右医药、保健、食品行业经验。团队合作多年，感情深厚、默契十足，实在、实战、实效。企业业务范围为营销策略、品牌广告、店铺运营、包装设计、活动推广、影视制作、网络建设、知识产权。胜道策划的客户遍布全国，尤其以北上广深一线城市居多。胜道策划公司用自己的营销主张，帮助一个个产品开拓了市场空间，创造了销售佳绩。帮助一个个企业实现了战略转型，走上了品牌之路。前进的脚步从未停止，在十余年的实践与发展历程中，胜道策划团队凭借敏锐的市场洞察力与超前的营销思维，深谙健康行业。</p>
+		                            <h1 style="color:red" id="future">一、非凡策划：</h1>
+                                    <p>15年行走大健康江湖</p>
+                                    <p>200余家企业策划服务</p>
+                                    <p>8成健康行业人脉沉淀</p>
+                                    <p>6大营销渠道亲临一线</p>
+                                    <p>10万条代理商数据积累</p>
+                                    <br><br>
+                                    <p>没有成熟营销工具的策划就是耍流氓！</p>
+                                    <p>没有可行商业模式的执行就是骑瞎马！</p>
+                                    <p>没有清晰盈利系统的生意就是过家家！</p>
+                                    <h1 style="color:red" id="future">二、非凡文化：</h1>
+                                    <p>非凡营销策划有限公司——中国健康产业策划，创办于郑州市，注册资金一千万元人民币。创始人张三先生，有10年以上的健康产业营销策划经验。公司由市调、文案、策划、设计、推广、招商、客服、讲师等职位组成，公司团队成员均科班出身，均十年左右医药、保健、食品行业经验。团队合作多年，感情深厚、默契十足，实在、实战、实效。企业业务范围为营销策略、品牌广告、店铺运营、包装设计、活动推广、影视制作、网络建设、知识产权。非凡策划的客户遍布全国，尤其以北上广深一线城市居多。胜道策划公司用自己的营销主张，帮助一个个产品开拓了市场空间，创造了销售佳绩。帮助一个个企业实现了战略转型，走上了品牌之路。前进的脚步从未停止。</p>
+                                    <h1 style="color:red" id="success">三、成功之道：</h1>
+                                    <p>骐骥一跃，不能十步；驽马十驾，功在不舍。同样，成功的秘诀不在于一蹴而就，而在于你是否能够持之以恒。从“昨夜西风调碧树，独上高楼，望尽天涯路。”到“衣带渐宽终不悔，为伊消得人憔悴。”再到“众里寻她千百度，蓦然回首，那人却在灯火阑珊处。”都应该坚持，坚持生命的困惑、领悟和真谛。只有如此，在你到暮年的时候，细细回想起来，才会觉得没有虚度曾经美好的年华，才会觉得自己的整个生命都充满价值。</p>
+                                    <h1 style="color:red" id="success">四、主要成就：</h1>
+                                    <p>公司现已成为全国营销界颇具影响力的全程全案营销机构，连续被评为“中国健康产业十佳策划公司”“最受欢迎策划公司”“中国最具合作价值策划公司”“十佳策划公司”等荣誉称号。</p>
+                                    <p><img src="{% static 'img/a1.jpg' %}" alt=""></p>
+                                    <h1 style="color:red" id="success">五、策划经验：</h1>
+                                    <p>计划，首先，我们需要拿出一个切实可行的计划，也就是说，在安排活动之前，要先拿一个计划书出来。</p>
+                                    <p>人员，在活动安排中，要安排好相关人员，并且保证每一个工作人员能够将自己的工作落实到位。</p>
+                                    <p>预算，在安排这个活动的时候，要做好财政预算，因为有的时候，如果没有做好预算的话，很可能会造成公司的损失。</p>
+                                    <p>物资，物质方面的采购也要尤为注意，因为如果在整个活动中，物质是比较重要的一块的话，那么物质一旦出错，就有可能导致整个活动没有办法进行。</p>
+                                    <p>安排好时间，什么时候开始，什么时候做什么样的活动，这些都是需要我们安排好的，并且时间尽量精确一点。</p>
+                                    <p>地点，如果是需要租借用地的话，一定要提前协商好，以免在要举行活动的时候出错。</p>
+                                    <h1 style="color:red" id="success">六、健康主流：</h1>
+                                    <p>生气勃勃，富有进取心；</p>
+                                    <p>性格开朗，充满活力；</p>
+                                    <p>明亮的眼睛和粉红的眼膜；</p>
+                                    <p>不易得病，对流行病有足够的耐受力；</p>
+								</div>
+								<div class="col-md-3 about-left">
+									<h2>最近资讯</h2>
+									<!-- news-grid -->
+									<div class="news-grid">
+                                        {% get_recent1_art as xx %}
+                                        {% for article in xx %}
+                                            {% if article.status == 1 %}
+                                                <a href="{% url 'design:detail' article.pk %}"><img src="/media/{{ article.image }}"></a>
+                                            {% endif %}
+                                        {% endfor %}
+									</div>
+									<!-- news-grid -->
+									<!-- recent-news -->
+									<div class="recent-posts">
+										<h2>热门典型</h2>
+										<!-- recent-post-grids -->
+                                        {% get_view_article as view_art %}
+                                        {% for article in view_art %}
+                                            {% if article.status == 1 %}
+                                                <div class="recent-post-grids">
+                                                    <div class="r-post-grid">
+                                                        <div class="r-post-grid-left">
+                                                            <a href="{% url 'design:detail' article.pk %}"><img src="/media/{{ article.image }}"></a>
+                                                        </div>
+                                                        <div class="r-post-grid-right">
+                                                            <h4>{{ article.title }}</h4>
+                                                            <p style="font-size: 12px;">{{ article.digest|truncatechars:30 }}</p>
+                                                        </div>
+                                                        <div class="clearfix"> </div>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+										<!-- recent-post-grids -->
+									</div>
+									<!-- recent-news -->
+								</div>
+							</div>
+						</div>
+					</div>
+					
+		<!-- about-us -->
+	<!--//End-About-->
+
+
+	<!--/start-footer-->
+        <div class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="col-md-3 footer-grid-copy-right">
+                        <div class="logo-2">
+                            <a href="{% url 'design:home' %}"><img src="{% static 'images/logo.png' %}" alt=""></a>
+                        </div>
+                        <p style="font-size: 12px">Copyright &copy; 2018.Company ZBJ - Collect from <a href="http://www.baidu.com/" title="baidu" target="_blank">F/F</a></p>
+                    </div>
+                    <div class="col-md-3 footer-grid">
+                        <h3>信息</h3>
+                        <ul class="bottom-nav">
+                            <li class="active"><a href="{% url 'design:home' %}">主页</a></li>
+
+                            <li><a href="{% url 'design:article' "" %}">经典案例 </a></li>
+                            <li><a href="{% url 'design:about' %}"> 关于 </a></li>
+                            <li><a href="{% url 'design:connect' %}">联系我们</a></li>
+
+
+                        </ul>
+                    </div>
+                    <div class="col-md-3 footer-grid">
+                        <h3>友情链接</h3>
+                        <div class="list styled arrow-list3">
+                            <ul>
+                                <li><a href="https://zhengzhou.zbj.com" target="_blank">ZBJ</a></li>
+                                <li><a href="http://www.zhiyufu.com" target="_blank"> 直 </a></li>
+                                <li><a href="http://www.evenger.com.cn" target="_blank">活动管家</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-3 footer-grid">
+                    <h3>联系我们</h3>
+                    <ul class="soc_icons3">
+                        <li><a href="#"><span>微信:1154714871</span></a></li>
+                        <li><a href="#"><span>QQ:1154714871</span></a></li>
+                        <li><a href="#"><span>电话:1588888888</span></a></li>
+                    </ul>
+
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+        <!--//End-footer-->
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('.top-nav ul li a').each(function () {
+                    if($(this)[0].href == String(window.location)){
+                        $(this).addClass('currentA').attr('href', 'javascript:void(0);');
+                    }
+                });
+                $().UItoTop({ easingType: 'easeOutQuart' });
+
+            });
+        </script>
+        <a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+</body>
+</html>		

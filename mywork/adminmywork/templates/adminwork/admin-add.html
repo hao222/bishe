@@ -1,0 +1,200 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<link rel="stylesheet" type="text/css" href="{% static 'h-ui/css/H-ui.min.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'h-ui.admin/css/H-ui.admin.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'lib/Hui-iconfont/1.0.8/iconfont.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'h-ui.admin/skin/default/skin.css' %}" id="skin" />
+<link rel="stylesheet" type="text/css" href="{% static 'h-ui.admin/css/style.css' %}" />
+
+<title>管理员管理 - 添加管理</title>
+    <style>
+        #content{
+            margin-left: 40%;
+            color:green;}
+        #content.warning{
+            color: red;}
+    </style>
+</head>
+<body>
+<article class="page-container">
+	<form class="form form-horizontal" id="form-admin-add">
+        {% csrf_token %}
+        <span id="content" class="span1"></span>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>管理员：</label>
+		<div class="formControls col-xs-6 col-sm-7">
+            {{ form.username }}
+		</div>
+	</div>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>密码：</label>
+		<div class="formControls col-xs-6 col-sm-7">
+            {{ form.password }}
+		</div>
+	</div>
+    <div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3" for="gender">性别：</label>
+		<div class="formControls col-xs-6 col-sm-7">
+            {{ form.gender }}
+		</div>
+	</div>
+
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机：</label>
+		<div class="formControls col-xs-6 col-sm-7">
+            {{ form.phone }}
+		</div>
+	</div>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>邮箱：</label>
+		<div class="formControls col-xs-6 col-sm-7">
+            {{ form.email }}
+		</div>
+	</div>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">角色：</label>
+		<div class="formControls col-xs-4 col-sm-3">
+            {{ form.admin_rool }}
+        </div>
+	</div>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">备注：</label>
+		<div class="formControls col-xs-6 col-sm-7">
+            {{ form.rool_info }}
+			<p class="textarea-numberbar"><em class="textarea-length">0</em>/140</p>
+		</div>
+	</div>
+	<div class="row cl">
+		<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+			<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+		</div>
+	</div>
+	</form>
+</article>
+
+<script type="text/javascript" src="{% static 'lib/jquery/1.9.1/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'lib/layer/2.4/layer.js' %}"></script>
+<script type="text/javascript" src="{% static 'h-ui/js/H-ui.js' %}"></script>
+<script type="text/javascript" src="{% static 'h-ui.admin/js/H-ui.admin.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'lib/jquery.validation/1.14.0/jquery.validate.js' %}"></script>
+<script type="text/javascript" src="{% static 'lib/jquery.validation/1.14.0/validate-methods.js' %}"></script>
+<script type="text/javascript" src="{% static 'lib/jquery.validation/1.14.0/messages_zh.js' %}"></script>
+
+<script type="text/javascript">
+$(function(){
+	$('.skin-minimal input').iCheck({
+		checkboxClass: 'icheckbox-blue',
+		radioClass: 'iradio-blue',
+		increaseArea: '20%'
+	});
+	
+	$("#form-admin-add").validate({
+		rules:{
+			adminName:{
+				required:true,
+				minlength:4,
+				maxlength:16
+			},
+			password:{
+				required:true,
+			},
+			password2:{
+				required:true,
+				equalTo: "#password"
+			},
+			sex:{
+				required:true,
+			},
+			phone:{
+				required:true,
+				isPhone:true,
+			},
+			email:{
+				required:true,
+				email:true,
+			},
+			adminRole:{
+				required:true,
+			},
+		},
+		onkeyup:false,
+		focusCleanup:true,
+		success:"valid",
+		submitHandler:function(form){
+			$(form).ajaxSubmit({
+				type: 'post',
+				url: "{% url 'adminmywork:admin_save' %}" ,
+				success: function(data){
+					layer.msg('添加成功!',{icon:1,time:1000});
+					setTimeout(function () {
+                        location.href="{% url 'adminmywork:admin_list' %}";
+                    },1000);
+
+				},
+                error: function(XmlHttpRequest, textStatus, errorThrown){
+					layer.msg('error!',{icon:1,time:1000});
+				}
+			});
+			var index = parent.layer.getFrameIndex(window.name);
+			parent.$('.btn-refresh').click();
+			parent.layer.close(index);
+		}
+	});
+});
+$(".phone").on('input propertychange',function () {
+        var value = $(this).val();
+        var uPattern = /^1[34578]\d{9}$/;
+        if (uPattern.test(value)){
+            $.ajax({
+                url:"{% url 'adminmywork:phone_check' %}?phone="+value,
+                success:function (data) {
+                    if (data.status !=1){
+                        $("#content").addClass('warning');
+                    }else{
+                        $("#content").removeClass('warning');
+                    }
+                    $("#content").html(data.msg);
+                }
+            });
+        }
+       else{
+           $("#content").text("请输入正确的手机号");
+       }
+    });
+    $(".username").on('input propertychange',function () {
+        var value = $(this).val();
+        var uPattern = /^[a-zA-Z]{1}[a-zA-Z0-9_]{3,8}$/;
+        if (uPattern.test(value)){
+            $.ajax({
+                url:"{% url 'adminmywork:user_check' %}?username="+value,
+                success:function (data) {
+                    if (data.status !=1){
+                        $("#content").addClass('warning');
+                    }else{
+                        $("#content").removeClass('warning');
+                    }
+                    $("#content").html(data.msg);
+                }
+            });
+        }
+       else{
+           $("#content").text("输入以字母开头4-8位数字字母下划线组合的字符");
+       }
+    });
+    $('body').click(function (e) {
+       $('.span1').html('');
+
+    });
+</script> 
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

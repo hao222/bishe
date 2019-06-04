@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>schedule</title>
+    {% load static %}
+	<link rel="stylesheet" href="{% static 'fontrili.css' %}">
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		ul{
+			list-style: none;
+		}
+		#schedule-box{
+			width: 320px;
+			margin: 0 auto;
+			padding: 35px 20px;
+			font-size: 13px;
+		}
+		.schedule-hd{
+			display: flex;
+			justify-content: space-between;
+			padding: 0 15px;
+		}
+		.today{
+			flex: 1;
+			text-align: center;
+		}
+		.ul-box{
+			overflow: hidden;
+		}
+		.ul-box > li{
+			float: left;
+			width: 14.28%;
+			text-align: center;
+			padding: 5px 0;
+		}
+		.other-month{
+			color: #999999;
+		}
+		.current-month{
+			color: #333333;
+		}
+		.today-style{
+			border-radius: 50%;
+			background: #58d321;
+		}
+		.arrow{
+			cursor: pointer;
+		}
+		.dayStyle{
+			display: inline-block;
+			width: 35px;
+			height: 35px;
+			border-radius: 50%;
+			text-align: center;
+			line-height: 35px;
+			cursor: pointer;
+		}
+		.current-month > .dayStyle:hover{
+			background: #00BDFF;
+			color: #ffffff;
+		}
+		.today-flag{
+			background: #00C2B1;
+			color: #fff;
+		}
+		.boxshaw{
+			box-shadow: 2px 2px 15px 2px #f3e5f5;
+            background-color: #f4fffe;
+		}
+		.selected-style {
+			background: #00BDFF;
+			color: #ffffff;
+		}
+		#h3Ele{
+            color:black;
+			text-align: center;
+			padding: 10px;
+		}
+        h2{
+            font-family: "Myriad Pro", "Trebuchet MS", sans-serif;
+            color: #9a9a9a;
+        }
+        .b{
+            color:#a21318;
+            font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
+        }
+        .aa{
+            font-weight: lighter;
+            color: #111;
+        }
+        h1{
+            background-color: #e0f2f1;
+            text-align: center;
+        }
+	</style>
+</head>
+<body>
+    <h1><i>欢迎来到非凡策划后台管理界面</i></h1>
+    <h2 class="aa">登录者:</h2>
+    <h2 class="h2">{% if user.is_superuser == 1 %}超级管理员{% else %}管理员{% endif %}✄{{ user.username }}</h2>
+    <h2 class="aa">最近登录:</h2>
+    <h2 class="h2">{{ user.last_login }}</h2>
+    <h2 class="aa">本次登录地址:</h2>
+    <h2 class="b"></h2>
+	<div id='schedule-box' class="boxshaw">
+	</div>
+	<div>
+		<h3 id='h3Ele'></h3>
+	</div>
+
+</body>
+<script src="{% static 'schedule.js' %}"></script>
+<script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+<script type="text/javascript" src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+
+<script>
+	var mySchedule = new Schedule({
+		el: '#schedule-box',
+		clickCb: function (y,m,d) {
+			document.querySelector('#h3Ele').innerHTML = '日期：'+y+'-'+m+'-'+d
+		},
+		nextMonthCb: function (y,m,d) {
+			document.querySelector('#h3Ele').innerHTML = '日期：'+y+'-'+m+'-'+d
+		},
+		nextYeayCb: function (y,m,d) {
+			document.querySelector('#h3Ele').innerHTML = '日期：'+y+'-'+m+'-'+d
+		},
+		prevMonthCb: function (y,m,d) {
+			document.querySelector('#h3Ele').innerHTML = '日期：'+y+'-'+m+'-'+d
+		},
+		prevYearCb: function (y,m,d) {
+			document.querySelector('#h3Ele').innerHTML = '日期：'+y+'-'+m+'-'+d
+		}
+	});
+	$(".b").html(returnCitySN["cip"]+','+returnCitySN["cname"]);
+</script>
+</html>

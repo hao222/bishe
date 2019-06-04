@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html dir="ltr" lang="en-US">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>非凡后台管理</title>
+    {% load static %}
+	<link rel="stylesheet" href="{% static 'style.css' %}" type="text/css" />
+	</head>
+
+	<body>
+        <div class="a">F/F·非凡策划后台管理</div>
+		<div id="container">
+			<form class="form form-horizontal" action="{% url 'adminmywork:login_check' %}" method="post">
+                {% csrf_token %}
+				<div class="login">F/F·登录</div>
+				<div class="username-text">用户名:</div>
+				<div class="password-text">密码:</div>
+				<div class="username-field">
+                    <input type="text" name="name" class="name">
+				</div>
+				<div class="password-field">
+					<input type="password" name="password">
+				</div>
+				<input type="submit" name="submit" value="登录">
+			</form>
+		</div>
+        <div id="footer">Copyright @非凡策划有限公司v1.1</div>
+	</body>
+</html>

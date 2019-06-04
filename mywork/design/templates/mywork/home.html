@@ -1,0 +1,395 @@
+{% load static %}
+{% load news_tag %}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title> Home </title>
+    <!-- 第二个轮播--------->
+    <link rel="stylesheet" type="text/css" href="{% static 'lunbo/css/normalize.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'lunbo/css/htmleaf-demo.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'lunbo/css/jquery.bscslider.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'lunbo/css/main.css' %}"/>
+    <!-- logo 标识-->
+    <link rel="Bookmark" href="{% static 'images/log.png' %}" >
+    <link rel="Shortcut Icon" href="{% static 'images/log.png' %}" />
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/normalize.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/htmleaf-demo.css' %}">
+    <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/style1.css' %}">
+    <link href="{% static 'css/bootstrap.css' %}" rel='stylesheet' type='text/css' />
+
+    <link href="{% static 'css/style.css' %}" rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/magnific-popup.css' %}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="非凡营销策划公司官网，医药营销策划，保健品营销策划，食品营销策划，品牌策划设计公司，15年精于大健康、大食品、大农业营销策划，电话1568888888"/>
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+    <script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+    <!-- start-smoth-scrolling-->
+    <script type="text/javascript" src="{% static 'js/move-top.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/easing.js' %}"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/modernizr.custom.53451.js' %}"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $(".scroll").click(function(event){
+                event.preventDefault();
+                $('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+            });
+        });
+    </script>
+
+    <script>
+        $(function() {
+            var pull 		= $('#pull');
+            menu 		= $('nav ul');
+            menuHeight	= menu.height();
+            $(pull).on('click', function(e) {
+                e.preventDefault();
+                menu.slideToggle();
+            });
+            $(window).resize(function(){
+                var w = $(window).width();
+                if(w > 320 && menu.is(':hidden')) {
+                    menu.removeAttr('style');
+                }
+            });
+        });
+    </script>
+    <!--//End-top-nav-script-->
+</head>
+<body>
+<!-- start-header-->
+<div id="home" class="header">
+    <div class="container">
+        <div class="top-header">
+            <div class="logo">
+                <a href="{% url 'design:home' %}"><img src="{% static 'images/logo.png' %}"></a>
+            </div>
+            <!--start-top-nav-->
+            <nav class="top-nav">
+                <ul class="top-nav">
+                    <li class=""><a href="{% url 'design:home' %}">主页</a></li>
+                    <li class=""><a href="{% url 'design:about' %}"> 关于</a></li>
+                    <li class="a2"><a href="{% url 'design:article' "" %}">案例 </a></li>
+                    <li class=""><a href="{% url 'design:connect' %}">联系</a></li>
+
+                </ul>
+                <a href="#" id="pull"><img src="{% static 'images/menu-icon.png' %}" title="menu" /></a>
+            </nav>
+            <!-- start search-->
+
+        </div>
+        <div class="main-search">
+            <form action="http://www.baidu.com" target="_blank">
+                <input type="text" value="百度搜索" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = '百度搜索';}" class="text"/>
+                <input type="submit" value=""/>
+            </form>
+            <form action="{% url 'design:article_search' "" %}" class="form-horizontal form1">
+                <input type="text" placeholder="经典案例" name="qq">
+                <input type="submit" class="" value="">
+            </form>
+            <div class="close"><img src="{% static 'images/cross.png' %}" /></div>
+        </div>
+        <div class="srch" style="width: 100%">
+            <button></button>
+            <div class="div1">
+                {% if user1 %}
+                    <a href="{% url 'design:publish' %}" class="btn btn-primary a1" style="padding:0;">发布内容 </a>
+                    <span style="color:white">|</span>
+                    <a href="{% url 'design:people' %}"><img src="/media/{{ user1.photo }}" class="img-circle" style="width: 34px;height: 34px; border-radius: 10px"> <span style="color:white"> | </span></a>
+                    <a href="{% url 'design:log_out' %}" class="btn btn-primary a1" style="padding:0;">退出登录</a>
+                {% else %}
+                    <a href="{% url 'design:login' %}" class="a1 btn btn-primary" style="padding:0;"> 登录 </a>
+                    <span style="color:white">&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</span>
+                    <a href="{% url 'design:register' %}" class="a1 btn btn-primary" style="padding:0;"> 注册</a>
+                {% endif %}
+            </div>
+        </div>
+        <script type="text/javascript">
+            $('.main-search').hide();
+            $('button').click(function (){
+                    $('.main-search').toggle();
+                    $('.main-search text').focus();
+                }
+            );
+            $('.close').click(function(){
+                $('.main-search').hide();
+            });
+            $('.form1').submit(function () {
+                $('.a2').each(function () {
+                    if($(this)[0].href == String(window.location)){
+                        $(this).addClass('currentA').attr('href', 'javascript:void(0);');
+                    }
+                });
+            });
+        </script>
+
+        <!-- Slideshow 4 -->
+        <div class="htmleaf-container">
+            <div id="wrapper">
+                <div id="slider-wrap">
+                    <ul id="slider">
+                        {% get_vip_article as vip_article %}
+                        {% for article in vip_article %}
+                            {% if article.status == 1 %}
+                                <li>
+                                    <div>
+                                        <p style="position: absolute; color:#fff; font-size: 22px;line-height: 200px;">{{ article.title }}</p>
+                                        <a href="{% url 'design:detail' article.pk %}"><img src="/media/{{ article.image }}" style="width:560px;height:650px; z-index: 999;"></a>
+                                    </div>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        <li><a href="#"><img src="media/active/20181126/low.jpg" alt="非凡首页"></a></li>
+                    </ul>
+                        
+                    <!--controls-->
+                    <div class="btns" id="next"><i class="fa fa-arrow-right"></i></div>
+                    <div class="btns" id="previous"><i class="fa fa-arrow-left"></i></div>
+                    <div id="counter"></div>
+
+                    <div id="pagination-wrap">
+                        <ul>
+                        </ul>
+                    </div>
+                    <!--controls-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="welcome-section">
+    <div class="container">
+        <div class="welcom-grids">
+            <div class="col-md-4 welcom-grid-img">
+                <img src="{% static 'images/jian.png' %}" title="img" />
+            </div>
+            <div class="col-md-4 welcom-grid-text">
+                <h2>了解我们</h2>
+                <p>15年行走大健康江湖·年单品招商回款·200余家企业策划服务·6大营销渠道亲临一线·10万条代理商数据积累·8成健康行业人脉沉淀·1心助力收人收心收钱。
+                    非凡营销策划有限公司——中国健康产业策划龙头，创办于文明故国，注册资金一亿元人民币。创始人吴昊先生，有15年以上的健康产业营销策划经验。业务案例为营销策略、品牌广告、店铺运营、包装设计、活动推广、影视制作、网络建设、知识产权。胜道策划的客户遍布全国....</p>
+            </div>
+            <div class="col-md-4 welcom-grid-list">
+                <h3>我爱我家</h3>
+                <div class="list styled arrow-list2">
+                    <ul>
+                        <li><a href="{% url 'design:about' %}?id=history"><img src="{% static 'images/ar.png' %}" alt="">非凡历史</a></li>
+                        <li><a href="{% url 'design:about' %}?id=future"><img src="{% static 'images/ar.png' %}" alt="">非凡文化</a></li>
+                        <li><a href="{% url 'design:about' %}"><img src="{% static 'images/ar.png' %}" alt="">成功之道</a></li>
+                        <li><a href="{% url 'design:about' %}"><img src="{% static 'images/ar.png' %}" alt="">成就证书</a></li>
+                        <li><a href="{% url 'design:about' %}"><img src="{% static 'images/ar.png' %}" alt="">策划经验</a></li>
+                        <li><a href="{% url 'design:about' %}"><img src="{% static 'images/ar.png' %}" alt=""> 健康主流</a></li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
+<!--/此轮播图为加钱的    给钱推热门,,,-->
+<div  class="testimonials" id="testimonials" style="margin-bottom: 20px;">
+    <div class="wmuSlider example1">
+        <div class="container-flueid">
+            <div class="slider slider1">
+                {% get_money_article as money_article %}
+                {% for article in money_article %}
+                    {% if article.status == 1 %}
+                        <a href="{% url 'design:detail' article.pk %}"><img src="/media/{{ article.image }}"></a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'lunbo/js/jquery.easing.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'lunbo/js/jquery.bscslider.js' %}"></script>
+<script>
+    $('.slider1').bscSlider({
+        duration: 2000,
+        effect:4,
+        navigation : true,
+        effect_speed: 750,
+        easing: 'easeOutQuad',
+        height	: 450
+    });
+</script>
+<!--经典案例-->
+<div class="Event-section">
+    <div class="container">
+        <h3 style="color:#f7eb7d;background: #ff0000">经典案例: <a href="{% url 'design:article' '' %}" style="float: right; color:white;background-color:#ff3d00;margin-right: 2%;text-decoration: none">More...</a> </h3>
+        <div class="section group">
+            {% get_class_article as class_article %}
+            {% for article in class_article %}
+                {% if article.status == 1 %}
+                    <div class="col-md-3 gallery-box article">
+                        <a href="{% url 'design:detail' article.id %}"><img src="/media/{{ article.image }}" style="width: 270px;height: 190px;"></a>
+                        <h4>{{ article.title }} </h4>
+                        <h5>{{ article.author }}<lable> {{ article.distribute_date|date:'Y|m|d' }} </lable>
+                            <p>{{ article.digest|safe }}</p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <div class="clearfix"></div>
+        </div>
+
+        <script type="text/javascript" src="{% static 'js/nivo-lightbox.min.js' %}"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#nivo-lightbox-demo a').nivoLightbox({ effect: 'fade' });
+            });
+        </script>
+    </div>
+</div>
+<!--热度最高-->
+<div class="Event-section">
+    <div class="container">
+        <h3 style="color:#f7eb7d;background: darkslategray">热度最高: <a href="{% url 'design:article' '' %}" style="float: right; color:#FF6D10;background-color:darkslategray;margin-right: 2%;text-decoration: none">More...</a> </h3>
+        <div class="section group">
+            {% get_view_article as view_article %}
+            {% for article in view_article %}
+                {% if article.status == 1 %}
+                    <div class="col-md-3 gallery-box article">
+                        <a href="{% url 'design:detail' article.id %}"><img src="/media/{{ article.image }}" style="width: 270px;height: 190px;"></a>
+                        <h4>{{ article.title }} </h4>
+                        <h5>{{ article.author }}<lable> {{ article.distribute_date|date:'Y|m|d' }} </lable>
+                            <p>{{ article.digest|safe }}</p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <div class="clearfix"></div>
+        </div>
+
+        <script type="text/javascript" src="{% static 'js/nivo-lightbox.min.js' %}"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#nivo-lightbox-demo a').nivoLightbox({ effect: 'fade' });
+            });
+        </script>
+    </div>
+</div>
+<!--最新更新-->
+<div class="Event-section">
+    <div class="container">
+        <h3 style="color:#676869;background: #d2dcf8">最近更新: <a href="{% url 'design:article' '' %}" style="float: right; color:black;background-color:#e1edf7;margin-right: 2%;text-decoration: none">More...</a> </h3>
+        <div class="section group">
+            {% get_recent_art as recent_article %}
+            {% for article in recent_article %}
+                {% if article.status == 1 %}
+                    <div class="col-md-3 gallery-box article">
+                        <a href="{% url 'design:detail' article.id %}"><img src="/media/{{ article.image }}" style="width: 270px;height: 190px;"></a>
+                        <h4>{{ article.title }} </h4>
+                        <h5>{{ article.author }}<lable> {{ article.distribute_date|date:'Y|m|d' }} </lable>
+                            <p>{{ article.digest|safe }}</p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <div class="clearfix"></div>
+        </div>
+
+        <script type="text/javascript" src="{% static 'js/nivo-lightbox.min.js' %}"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#nivo-lightbox-demo a').nivoLightbox({ effect: 'fade' });
+            });
+        </script>
+    </div>
+</div>
+
+
+<!--/start-Events-->
+<div class="leave-section">
+    <div class="container">
+        <h3 style="background-color: #0a6999; color:#ea4a4f">离开之前</h3>
+        <div class="Event-grids">
+            <div class="col-md-3 leave-grid">
+                <h4>签名&&文件</h4>
+                <p style="text-align: justify">  &nbsp; &nbsp; &nbsp; &nbsp;现已成为全国营销界颇具影响力的全程全案营销机构，连续被评为“中国健康产业十佳策划公司”“最受欢迎策划公司”“2013年度健康行业风云人物”“中国最具合作价值策划公司”“十佳策划公司”等荣誉称号。 </p>
+            </div>
+            <div class="col-md-3 leave-grid">
+                <h4>公司章程</h4>
+                <p style="text-align: justify">&nbsp; &nbsp; &nbsp; &nbsp;但是还有一群人，他们工作有时候长达24小时，从第一天晚上到第二天晚上，有时候要36小时、 48小时甚至更长,在这段时间里，他们不眠不休，顾不上吃饭喝水，他们精神高度集中... 他们是“活动人”。非凡策划人就是这样一群活动人。</p>
+            </div>
+            <div class="col-md-3 leave-grid">
+                <h4>留言我们</h4>
+                <p style="text-align: justify">&nbsp; &nbsp; &nbsp;我们曾经在一起欣赏过美丽的花；我们曾经在一起幻想过美丽的季节。离开后不要忘了我们曾经一起走过的日子。我们有过如水的平静，有过激烈的辩论。我们紧靠肩头，紧握双手，发出一个共同的心声。一切都将存留在我记忆的最深处。</p>
+            </div>
+            <div class="col-md-3 leave-grid">
+                <h4>阅读经典</h4>
+               <p style="text-align: justify">&nbsp; &nbsp;&nbsp;何晏曾说：“今集诸家之善，记其姓名；有不安者，颇为改易，名曰《论语集解》……”裴駰则说：“采经传百家并先儒之说，豫是有益，悉皆抄内。删其游辞，取其要实，或义在可疑，则数家兼列……号曰《集解》”。集百家之策，为汝所谋。</p>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
+<!--/start-footer-->
+<div class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="col-md-3 footer-grid-copy-right">
+                <div class="logo-2">
+                    <a href="{% url 'design:home' %}"><img src="{% static 'images/logo.png' %}" alt=""></a>
+                </div>
+                <p style="font-size: 12px">Copyright &copy; 2018.Company ZBJ - Collect from <a href="http://www.baidu.com/" title="baidu" target="_blank">F/F</a></p>
+            </div>
+            <div class="col-md-3 footer-grid">
+                <h3>信息</h3>
+                <ul class="bottom-nav">
+                    <li class="active"><a href="{% url 'design:home' %}">主页</a></li>
+
+                    <li><a href="{% url 'design:article' "" %}">经典案例 </a></li>
+                    <li><a href="{% url 'design:about' %}"> 关于 </a></li>
+                    <li><a href="{% url 'design:connect' %}">联系我们</a></li>
+
+
+                </ul>
+            </div>
+            <div class="col-md-3 footer-grid">
+                <h3>友情链接</h3>
+                <div class="list styled arrow-list3">
+                    <ul>
+                        <li><a href="https://zhengzhou.zbj.com" target="_blank">ZBJ</a></li>
+                        <li><a href="http://www.zhiyufu.com" target="_blank"> 直 </a></li>
+                        <li><a href="http://www.evenger.com.cn" target="_blank">活动管家</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-3 footer-grid">
+            <h3>联系我们</h3>
+            <ul class="soc_icons3">
+                <li><a href="#"><span>微信:1154714871</span></a></li>
+                <li><a href="#"><span>QQ:1154714871</span></a></li>
+                <li><a href="#"><span>电话:1588888888</span></a></li>
+            </ul>
+
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>
+<a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $().UItoTop({ easingType: 'easeOutQuart' });
+
+        $('.top-nav ul li a').each(function () {
+            if($(this)[0].href == String(window.location)){
+                $(this).addClass('currentA').attr('href', 'javascript:void(0);');
+            }
+        });
+
+    });
+
+</script>
+<script src="{% static 'js/slide.js' %}"></script>
+</body>
+</html>		

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load pagetag %}
+{% block css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/score.css' %}">
+{% endblock %}
+
+
+{% block right11 %}
+<div class="a">
+    <p>•我的积分</p>
+    <p>当前剩余积分 <span></span><span>{{ user1.score }}</span><a href="{% url 'design:duihuan' %}" class="btn btn-primary" style="float: right;">兑换发布次数</a></p>
+</div>
+{% endblock %}
+{% block right22 %}
+<div class="b">
+ <p>•积分说明</p>
+    <div class="uls">
+
+        <p style="font-weight: normal;"></p>
+        <p>用户每分享一次活动策划.就可以免费获得50积分.</p>
+        <p>同一个活动案例每个用户第一次分享有效.</p>
+    </div>
+</div>
+
+{% endblock %}
+{% block right33 %}
+<div class="c">
+    <p>•积分账单</p>
+    <div class="panel panel-default">
+        <table class="table">
+            {% for bill in bill_list %}
+                <tr class="active">
+                    <td>{{ bill.title }}</td>
+                    <td>{{ bill.score }}</td>
+                    <td>{{ bill.cost_date }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+<nav aria-label="Page navigation" class="d">
+    <ul class="pagination">
+        {% if bill_list.has_previous  %}
+          <li>
+              <a href="?page={{ bill_list.previous_page_number }}" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+              </a>
+          </li>
+        {% endif %}
+        {% for pg in bill_list.paginator.page_range %}
+            {% circle_page bill_list.number pg %}
+        {% endfor %}
+        {% if bill_list.has_next %}
+            <li>
+                <a href="?page={{ bill_list.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+<div class="e">
+    <form action="{% url 'design:score' %}" method="post" class="form-horizontal">
+        {% csrf_token %}
+        <div class="form-group">
+            <div class="col-sm-3" style="margin-left: 30%;">
+                <input type="text" name="tt" value="{{ page|default:1 }}" class="form-control">
+             </div>
+            <div class="col-sm-2">
+                <input type="submit" class="btn btn-primary " value="确定">
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

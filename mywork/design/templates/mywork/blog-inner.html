@@ -1,0 +1,439 @@
+{% load static %}
+{% load news_tag %}
+{% load pagetag %}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Blog-inner</title>
+    <link rel="Bookmark" href="{% static 'images/log.png' %}" >
+    <link rel="Shortcut Icon" href="{% static 'images/log.png' %}" />
+
+    <link href="{% static 'css/bootstrap.css' %}" rel='stylesheet' type='text/css' />
+
+    <link href="{% static 'css/style.css' %}" rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/magnific-popup.css' %}">
+    <!-- Custom Theme files -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="非凡营销策划公司官网，医药营销策划，保健品营销策划，食品营销策划，品牌策划设计公司，15年精于大健康、大食品、大农业营销策划，电话1568888888"/>
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+    <!-- 分享插件-------------------->
+    <script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+    <script src="{% static 'fenxiang/layer_mobile/layer.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'fenxiang/share/css/share.min.css' %}">
+    <script src="{% static 'fenxiang/share/js/social-share.min.js' %}"></script>
+    <!-- start-smoth-scrolling-->
+    <script type="text/javascript" src="{% static 'js/move-top.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/easing.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'js/modernizr.custom.53451.js' %}"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $(".scroll").click(function(event){
+                event.preventDefault();
+                $('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+            });
+        });
+    </script>
+    <!--start-smoth-scrolling-->
+    <!--webfonts-->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <!--//webfonts-->
+    <!--start-top-nav-script-->
+    <script>
+        $(function() {
+            var pull 		= $('#pull');
+            menu 		= $('nav ul');
+            menuHeight	= menu.height();
+            $(pull).on('click', function(e) {
+                e.preventDefault();
+                menu.slideToggle();
+            });
+            $(window).resize(function(){
+                var w = $(window).width();
+                if(w > 320 && menu.is(':hidden')) {
+                    menu.removeAttr('style');
+                }
+            });
+        });
+    </script>
+    <!--//End-top-nav-script-->
+</head>
+<body>
+<!-- start-header-->
+<div class="header-top">
+    <div class="container">
+        <div class="top-header">
+            <div class="logo">
+                <a href="{% url 'design:home' %}"><img src="{% static 'images/logo.png' %}" alt=""></a>
+            </div>
+            <!--start-top-nav-->
+            <!--start-top-nav-->
+            <nav class="top-nav">
+                <ul class="top-nav">
+                    <li class=""><a href="{% url 'design:home' %}">主页</a></li>
+                    <li class=""><a href="{% url 'design:about' %}"> 关于</a></li>
+                    <li class="currentA"><a href="{% url 'design:article' "" %}">案例 </a></li>
+                    <li class=""><a href="{% url 'design:connect' %}">联系</a></li>
+                    <div class="clearfix"></div>
+
+                </ul>
+                <a href="#" id="pull"><img src="{% static 'images/menu-icon.png' %}" title="menu" /></a>
+            </nav>
+
+            <!-- start search-->
+            <div class="clearfix"></div>
+        </div>
+        <div class="main-search">
+            <form action="http://www.baidu.com" target="_blank">
+                <input type="text" value="百度搜索" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = '百度搜索';}" class="text"/>
+                <input type="submit" value=""/>
+            </form>
+            <form action="{% url 'design:article_search' "" %}" class="form-horizontal form1">
+                <input type="text" placeholder="经典案例" class="" name="qq">
+                <input type="submit" class="" value="">
+            </form>
+            <div class="close"><img src="{% static 'images/cross.png' %}" /></div>
+        </div>
+        <div class="srch" style="width: 100%;">
+            <button></button>
+            <div class="div1">
+                {% if user1 %}
+                    <a href="{% url 'design:publish' %}" class="btn btn-primary a1" style="padding:0;">发布内容 </a>
+                    <span style="color:white">|</span>
+                    <a href="{% url 'design:people' %}"><img src="/media/{{ user1.photo }}" class="img-circle" style="width: 34px;height: 34px; border-radius: 10px"> <span style="color:white"> | </span></a>
+                    <a href="{% url 'design:log_out' %}" class="btn btn-primary a1" style="padding:0;">退出登录</a>
+                {% else %}
+                    <a href="{% url 'design:login' %}" class="a1 btn btn-primary" style="padding:0;"> 登录 </a>
+                    <span style="color:white">&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</span>
+                    <a href="{% url 'design:register' %}" class="a1 btn btn-primary" style="padding:0;"> 注册</a>
+                {% endif %}
+            </div>
+        </div>
+        <script type="text/javascript">
+            $('.main-search').hide();
+            $('button').click(function (){
+                    $('.main-search').toggle();
+                    $('.main-search text').focus();
+                }
+            );
+            $('.close').click(function(){
+                $('.main-search').hide();
+            });
+        </script>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<!-- Blog -->
+<div class="blog">
+    <div class="container">
+        <div class="blog-content">
+            <div class="container">
+                <div class="blog-content-left">
+                    <div class="blog-articals">
+                        <div class="blog-artical">
+                            <div class="blog-artical-basicinfo">
+                                <ul>
+                                    <li class="post-date"><p><span> 0{{ article.distribute_date|date:'d' }}</span><label>{{ article.distribute_date|date:'m' }},{{ article.distribute_date|date:'Y' }}</label></p></li>
+                                    <div class="clearfix"> </div>
+                                </ul>
+                            </div>
+                            <div class="blog-artical-info">
+                                <ul class="product-head">
+                                    <li><a href="{% url 'design:home' %}">首页</a> <span>::</span></li>
+                                    <li class="active-page">案例</li>
+                                    <div class="clear"> </div>
+                                </ul>
+                                <div class="blog-artical-info-img">
+                                    <img src="/media/{{ article.image }}" class="img-responsive zoom-img">
+                                </div>
+                                <div class="blog-artical-info-head">
+                                    <h2><a href="">{{ article.title }}</a></h2>
+                                    <ul>
+                                        <li><span> </span>by <a href="#">{{ article.author }}</a></li>
+                                        <li><span class="tag"> </span><a href="#">{{ article.pubperson }}</a></li>
+                                        <li><span class="tt"></span>{{ article.view_count }}</li>
+                                        <li class="li1"><span class="ttt"></span>{{ article.share_count }}</li>
+                                        <div class="clearfix"> </div>
+                                    </ul>
+                                </div>
+                                <div class="blog-artical-info-text">
+                                    <p>{{ article.content|safe }}</p>
+                                </div>
+                            </div>
+                            <div class="clearfix"> </div>
+                        </div>
+                        <div>
+                            <p>
+                            <span class="dian span1" style="width: 145px;height:60px;display: inline-block;float: left;margin-left: 20%;"> <i style="margin-left: 55%;font-size: 32px;">{{ article.votes_count }}</i></span>
+
+                            <span class="fenx span2"><img src="{% static 'img/f@2x.png' %}" onclick="do_share()"></span>
+                            </p>
+                            <script>
+                                $('.span1').click(function (e) {
+                                   var a_id ={{ article.id }};
+                                   console.log(a_id);
+                                   $.ajax({
+                                       type:'get',
+                                       url:"{% url 'design:ajax_zan' %}?aid="+a_id,
+                                       success:function (data) {
+                                           alert(data.msg);
+                                           $(this).removeClass('dian');
+                                           $('.span1').addClass('like');
+                                           $('.span1 i').html(data.votes);
+                                       }
+                                   });
+                                });
+                                $('.span2').click(function (e) {
+                                   var a_id = {{ article.id }};
+                                   $.ajax({
+                                      type:'get',
+                                      url:"{% url 'design:ajax_fen' %}?aid="+a_id,
+                                      success:function (data) {
+                                          if (data.status == '1'){
+                                              setTimeout(function (e) {
+                                                  alert(data.msg);
+                                                  location.reload();
+                                              },6000);
+
+
+                                          }
+                                          if (data.status == '0'){
+                                              $('#share_box ,.social-share,#share_box .social-share>a').css('display','none');
+                                              alert(data.msg);
+                                          }
+                                          if (data.status=='2'){
+                                              $('#share_box ,.social-share>a').css('display','none');
+                                              alert(data.msg);
+                                          }
+                                          $('.li1').html(data.share_count);
+                                      }
+                                   });
+                                });
+                            </script>
+                            <div id="share_box" style="display:none;">
+                                <div class="social-share" data-initialized="true" style="text-align: center;" data-title="要分享的标题（可选）">
+                                    <a href="#" class="social-share-icon icon-weibo"></a>
+                                    <a href="#" class="social-share-icon icon-wechat"></a>
+                                    <a href="#" class="social-share-icon icon-qq"></a>
+                                    <a href="#" class="social-share-icon icon-qzone"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comments-area">
+                            <h3 class="h33">请评论:&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<i style="margin-left: 15%;color:#d84315">{{ msg }}</i></h3>
+                            <script>
+                                setTimeout(function (e) {
+                                    $('.h33>i').html('');
+                                },3000);
+
+                            </script>
+                            <form action="{% url 'design:article_comment' article.id %}" method="post">
+                                {% csrf_token %}
+                                <p>
+                                    <label>Comment</label>
+                                    <span>*</span>
+                                    <textarea name="content" id="content" cols="20" rows="5"></textarea>
+                                </p>
+                                <p>
+                                    <input type="submit" value="发表评论">
+                                </p>
+                            </form>
+                            <div class="c6">
+                                <ul>
+                                    {% for comment in comment_list %}
+                                        <li>
+                                            <img src="/media/{{ comment.user.photo }}">
+                                            {{ comment.user.username }}
+                                        </li>
+                                        <li>
+                                            {{ comment.content }}
+                                        </li>
+                                        <li>
+                                            {{ comment.send_time|cut }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <nav aria-label="Page navigation" style="float: left; margin-left: 35%;">
+                                <ul class="pagination">
+                                    {% if comment_list.has_previous  %}
+                                        <li>
+                                            <a href="?page={{ comment_list.previous_page_number }}" aria-label="Previous">
+                                                <i aria-hidden="true">&laquo;</i>
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                    {% for pg in comment_list.paginator.page_range %}
+                                        {% circle_page comment_list.number pg %}
+                                    {% endfor %}
+                                    {% if comment_list.has_next %}
+                                        <li>
+                                            <a href="?page={{ comment_list.next_page_number }}" aria-label="Next">
+                                                <i aria-hidden="true">&raquo;</i>
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                </div>
+                <!--start-blog-pagenate-->
+                <div class="blog-content-right">
+                    <div class="b-search">
+                        <form action="{% url 'design:article_search' "" %}" class="form-horizontal" method="get">
+                            <input type="text" name="qq" class="form-control">
+                            <input type="submit" value="" class="form-control">
+                        </form>
+                    </div>
+                    <!--start-twitter-weight-->
+                    <div class="categories">
+                        <h3>案例分类</h3>
+                        <div class="list styled arrow-list2">
+                            <ul>
+                                {% for category in category_list %}
+                                    <li class="{% if c_id == category.id %}now{% endif %}"><a href="{% url 'design:article' category.id %}" target="_self"><img src="{% static 'images/ar.png' %}">{{ category }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <!-- //End-tag-weight-->
+                    </div>
+                    <div class="Archives">
+                        <h3>时间</h3>
+                        <div class="list styled arrow-list2">
+                            {% regroup articles by distribute_date.year as year_post_group %}
+                            <ul>
+                                {% for year in year_post_group %}
+                                    <li>{{ year.grouper }} 年
+                                        {% regroup year.list by distribute_date.month as month_post_group %}
+                                        <ul>
+                                            {% for month in month_post_group %}
+                                                <li>{{ month.grouper }} 月
+                                                    <ul>
+                                                        {% for post in month.list %}
+                                                            <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% endfor %}
+
+                            </ul>
+
+                        </div>
+
+                        <!-- //End-tag-weight-->
+                    </div>
+                    <div class="recent-posts one">
+                        <h2>最新发现</h2>
+                        <!-- recent-post-grids -->
+                        <div class="recent-post-grids">
+                            {% get_recents_art as recent_art %}
+                            {% for article in recent_art %}
+                                <div class="r-post-grid">
+                                    <div class="r-post-grid-left">
+                                        <a href="{% url 'design:detail' article.id %}"><img src="/media/{{ article.image }}" title="name"></a>
+                                    </div>
+                                    <div class="r-post-grid-right">
+                                        <h4>{{ article.title }}</h4>
+                                        <p style="font-size: 12px;">{{ article.digest|truncatechars:30 }}</p>
+                                    </div>
+                                    <div class="clearfix"> </div>
+                                </div>
+                            {% endfor %}
+
+
+
+                        </div>
+                        <!-- recent-post-grids -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Blog -->
+    </div>
+    <!--/start-footer-->
+    <div class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="col-md-3 footer-grid-copy-right">
+                    <div class="logo-2">
+                        <a href="{% url 'design:home' %}"><img src="{% static 'images/logo.png' %}" alt=""></a>
+                    </div>
+                    <p style="font-size: 12px">Copyright &copy; 2018.Company ZBJ - Collect from <a href="http://www.baidu.com/" title="baidu" target="_blank">F/F</a></p>
+                </div>
+                <div class="col-md-3 footer-grid">
+                    <h3>信息</h3>
+                    <ul class="bottom-nav">
+                        <li class="active"><a href="{% url 'design:home' %}">主页</a></li>
+
+                        <li><a href="{% url 'design:article' "" %}">经典案例 </a></li>
+                        <li><a href="{% url 'design:about' %}"> 关于 </a></li>
+                        <li><a href="{% url 'design:connect' %}">联系我们</a></li>
+
+
+                    </ul>
+                </div>
+                <div class="col-md-3 footer-grid">
+                    <h3>友情链接</h3>
+                    <div class="list styled arrow-list3">
+                        <ul>
+                            <li><a href="https://zhengzhou.zbj.com" target="_blank">ZBJ</a></li>
+                            <li><a href="http://www.zhiyufu.com" target="_blank"> 直 </a></li>
+                            <li><a href="http://www.evenger.com.cn" target="_blank">活动管家</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 footer-grid">
+                <h3>联系我们</h3>
+                <ul class="soc_icons3">
+                    <li><a href="#"><span>微信:1154714871</span></a></li>
+                    <li><a href="#"><span>QQ:1154714871</span></a></li>
+                    <li><a href="#"><span>电话:1588888888</span></a></li>
+                </ul>
+
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+    <!--//End-footer-->
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.top-nav ul li a').each(function () {
+                if($(this)[0].href == String(window.location)){
+                    $(this).addClass('currentA').attr('href', 'javascript:void(0);');
+                }
+            });
+            $().UItoTop({ easingType: 'easeOutQuart' });
+            {% if messages %}
+                {% for message in messages %}
+                    alert("{{ message }}",1000);
+                {% endfor %}
+            {% endif %}
+        });
+    </script>
+    <script type="text/javascript">
+            //弹出页面层
+            function do_share(){
+                layer.open({
+                type: 2
+                ,content: $('#share_box').html()
+                ,anim: 'up'
+
+                });
+            }
+        </script>
+    <a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+</body>
+</html>
+<script>
+</script>

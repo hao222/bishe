@@ -1,0 +1,127 @@
+<!--_meta 作为公共模版分离出去-->
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="Bookmark" href="/favicon.ico" >
+<link rel="Shortcut Icon" href="/favicon.ico" />
+
+<link rel="stylesheet" type="text/css" href="{% static 'h-ui/css/H-ui.min.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'h-ui.admin/css/H-ui.admin.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'lib/Hui-iconfont/1.0.8/iconfont.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'h-ui.admin/skin/default/skin.css' %}" id="skin" />
+<link rel="stylesheet" type="text/css" href="{% static 'h-ui.admin/css/style.css' %}" />
+
+<title>栏目设置</title>
+</head>
+<body>
+
+<div class="page-container">
+	<form action="{% url 'adminmywork:sort_save2' %}" method="post" class="form form-horizontal" id="">
+        {% csrf_token %}
+		<div id="tab-category" class="HuiTab">
+			<div class="tabBar cl">
+				<span>基本内容</span>
+			</div>
+			<div class="tabCon">
+                <div class="row cl" style="color:#a8a8a8">
+					<label class="form-label col-xs-4 col-sm-3">创建者：</label>
+					<div class="formControls col-xs-8 col-sm-9">{{ user.username }}</div>
+				</div>
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-3">
+						<span class="c-red">*</span>
+						分类名称：</label>
+					<div class="formControls col-xs-8 col-sm-9">
+						{{ form.Sname }}
+					</div>
+					<div class="col-3">
+					</div>
+				</div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-3">描述：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        {{ form.Scontent }}
+                        <p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
+                    </div>
+                    <div class="col-3">
+                    </div>
+                </div>
+			</div>
+            <input type="hidden" name="c_id" value="{{ c_id }}">
+
+		</div>
+		<div class="row cl">
+			<div class="col-9 col-offset-3">
+				<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+			</div>
+		</div>
+	</form>
+</div>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="{% static 'lib/jquery/1.9.1/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'lib/layer/2.4/layer.js' %}"></script>
+<script type="text/javascript" src="{% static 'h-ui/js/H-ui.js' %}"></script>
+<script type="text/javascript" src="{% static 'h-ui.admin/js/H-ui.admin.js' %}"></script>  <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="{% static 'lib/My97DatePicker/4.8/WdatePicker.js' %}"></script>
+<script type="text/javascript" src="{% static 'lib/jquery.validation/1.14.0/jquery.validate.js' %}"></script>
+<script type="text/javascript" src="{% static 'lib/jquery.validation/1.14.0/validate-methods.js' %}"></script>
+<script type="text/javascript" src="{% static 'lib/jquery.validation/1.14.0/messages_zh.js' %}"></script>
+<script type="text/javascript">
+{#表单验证#}
+$("form").submit(function (e) {
+    if (!$("#c_name").val()){
+        $.Huimodalalert("栏目名称不为空",1000);
+        $("#c_name").focus();
+        return false;
+    }
+    if (!$("#c_content").val()){
+        $.Huimodalalert("栏目内容不为空",1000);
+        $("#c_content").focus();
+        return false;
+    }
+});
+{% if storage %}
+    {% for message in storage %}
+        {% if message %}
+            $.Huimodalalert("{{ message }}",1000);
+        {% endif %}
+    {% endfor %}
+{% endif %}
+$(function(){
+	$('.skin-minimal input').iCheck({
+		checkboxClass: 'icheckbox-blue',
+		radioClass: 'iradio-blue',
+		increaseArea: '20%'
+	});
+
+	$("#tab-category").Huitab({
+		index:0
+	});
+	$("#form-category-add").validate({
+		rules:{
+
+		},
+		onkeyup:false,
+		focusCleanup:true,
+		success:"valid",
+		submitHandler:function(form){
+			//$(form).ajaxSubmit();
+			var index = parent.layer.getFrameIndex(window.name);
+			//parent.$('.btn-refresh').click();
+			parent.layer.close(index);
+		}
+	});
+});
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

@@ -1,0 +1,187 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Contact </title>
+    <link rel="stylesheet" href="{% static 'css/cropper.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ImgCropping.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <!-- logo 标识-->
+    <link rel="Bookmark" href="{% static 'images/log.png' %}" >
+    <link rel="Shortcut Icon" href="{% static 'images/log.png' %}" />
+    <link href="{% static 'css/bootstrap.css' %}" rel='stylesheet' type='text/css' />
+    <link href="{% static 'css/style2.css' %}" rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/magnific-popup.css' %}">
+    <!-- Custom Theme files -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+
+    {% block css %}
+    {% endblock %}
+</head>
+<body>
+<!-- start-header-->
+<div class="header-top">
+    <div class="container">
+        <div class="top-header">
+            <div class="logo">
+                <a href="{% url 'design:home' %}"><img src="{% static 'images/logo.png' %}" alt=""></a>
+            </div>
+            <!--start-top-nav-->
+            <!--start-top-nav-->
+            <nav class="top-nav">
+                <ul class="top-nav">
+                    <li class="active"><a href="{% url 'design:home' %}">主页</a></li>
+                    <li><a href="{% url 'design:about' %}"> 关于</a></li>
+                    <li><a href="{% url 'design:article' "" %}">案例 </a></li>
+                    <li><a href="{% url 'design:connect' %}">联系</a></li>
+                    <div class="clearfix"> </div>
+
+                </ul>
+                <a href="#" id="pull"><img src="{% static 'images/menu-icon.png' %}" title="menu" /></a>
+            </nav>
+
+            <!-- start search-->
+            <div class="clearfix"></div>
+        </div>
+        <div class="main-search">
+            <form action="http://www.baidu.com" target="_blank">
+                <input type="text" value="百度搜索" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = '百度搜索';}" class="text"/>
+                <input type="submit" value=""/>
+            </form>
+            <form action="{% url 'design:article_search' "" %}" class="form-horizontal form1">
+                <input type="text" placeholder="经典案例" name="qq">
+                <input type="submit" class="" value="">
+            </form>
+            <div class="close"><img src="{% static 'images/cross.png' %}" /></div>
+        </div>
+
+        <div class="srch" style="width: 100%;">
+            <button></button>
+            <div class="div1">
+                {% if user1 %}
+                    <a href="{% url 'design:publish' %}" class="btn btn-primary a1" style="padding:0;">发布内容 </a>
+                    <span style="color:white">|</span>
+                    <a href="{% url 'design:people' %}"><img src="/media/{{ user1.photo }}" class="img-circle" style="width: 34px;height: 34px; border-radius: 10px"> <span style="color:white"> | </span></a>
+                    <a href="{% url 'design:log_out' %}" class="btn btn-primary a1" style="padding:0;">退出登录</a>
+                {% else %}
+                    <a href="{% url 'design:login' %}" class="a1 btn btn-primary" style="padding:0;"> 登录 </a>
+                    <span style="color:white">&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</span>
+                    <a href="{% url 'design:register' %}" class="a1 btn btn-primary" style="padding:0;"> 注册</a>
+                {% endif %}
+            </div>
+        </div>
+        <script type="text/javascript">
+            $('.main-search').hide();
+            $('button').click(function (){
+                    $('.main-search').toggle();
+                    $('.main-search text').focus();
+                }
+            );
+            $('.close').click(function(){
+                $('.main-search').hide();
+            });
+        </script>
+    </div>
+</div>
+<!--start-contact-->
+<div class="content">
+    <div class="cont">
+        <div class="content1">
+            <div class="contentx">
+                <img src="/media/{{ user1.photo }}" class="img-circle imgs" style="width:72px;height:72px;">
+                <p>
+                    {{ user1.nick_name }}
+                    <img src="{% static 'img1/vip.png' %}">
+                </p>
+            </div>
+            <div class="zz">
+                <ul>
+                    <li><img src="{% static 'img1/my_jf.png' %}" style="width:20px;height:20px;">剩余积分</li>
+                    <li> &nbsp;{{ user1.score }} </li>
+                </ul>
+                <ul><li>剩余发布次数</li><li>&nbsp;{{ user1.leave_count }}</li></ul>
+            </div>
+        </div>
+        <div class="content2">
+            <ul>
+                <li role="presentation"><a href="{% url 'design:score' %}" class=""><img src="{% static 'img1/my_jf.png' %}"> &nbsp;我的积分</a></li>
+                <li role="presentation"><a href="{% url 'design:mypub' 10 %}"><img src="{% static 'img1/post_n.png' %}"> &nbsp;我的发布</a></li>
+                <li role="presentation"><a href="{% url 'design:message' %}"><img src="{% static 'img1/xxx_n.png' %}"> &nbsp;消息通知</a></li>
+                <li><a href="{% url 'design:people' %}">个人资料</a></li>
+                <li><a href="{% url 'design:log_out' %}">退出登录</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content3">
+        {% block right11 %}{% endblock right11 %}
+        {% block right22 %}{% endblock right22 %}
+        {% block right33 %}{% endblock right33 %}
+    </div>
+    <!--/start-footer-->
+    <div class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="col-md-3 footer-grid-copy-right">
+                    <div class="logo-2">
+                        <a href="{% url 'design:home' %}"><img src="{% static 'images/logo.png' %}" alt=""></a>
+                    </div>
+                    <p style="font-size: 12px">Copyright &copy; 2018.Company ZBJ - Collect from <a href="http://www.baidu.com/" title="baidu" target="_blank">F/F</a></p>
+                </div>
+                <div class="col-md-3 footer-grid">
+                    <h3>信息</h3>
+                    <ul class="bottom-nav">
+                        <li class="active"><a href="{% url 'design:home' %}">主页</a></li>
+
+                        <li><a href="{% url 'design:article' "" %}">经典案例 </a></li>
+                        <li><a href="{% url 'design:about' %}"> 关于 </a></li>
+                        <li><a href="{% url 'design:connect' %}">联系我们</a></li>
+
+
+                    </ul>
+                </div>
+                <div class="col-md-3 footer-grid">
+                    <h3>友情链接</h3>
+                    <div class="list styled arrow-list3">
+                        <ul>
+                            <li><a href="https://zhengzhou.zbj.com" target="_blank">ZBJ</a></li>
+                            <li><a href="http://www.zhiyufu.com" target="_blank"> 直 </a></li>
+                            <li><a href="http://www.evenger.com.cn" target="_blank">活动管家</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-3 footer-grid">
+                <h3>联系我们</h3>
+                <ul class="soc_icons3">
+                    <li><a href="#"><span>微信:1154714871</span></a></li>
+                    <li><a href="#"><span>QQ:1154714871</span></a></li>
+                    <li><a href="#"><span>电话:1588888888</span></a></li>
+                </ul>
+
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+    <!--//End-footer-->
+    <a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+</body>
+<script>
+
+    $(document).ready(function () {
+        $('.content2 ul li a').each(function () {
+            if($(this)[0].href == String(window.location)){
+                $(this).addClass('currentA').attr('href', 'javascript:void(0);');
+            }
+        });
+    });
+</script>
+</html>
+{% block js %}
+    <script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+{% endblock %}

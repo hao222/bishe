@@ -1,0 +1,79 @@
+{% load static %}
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>foregt_pwd</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/default.css">
+	<link rel="stylesheet" href="/static/css/materialize.min.css">
+        <!-- logo 标识-->
+    <link rel="Bookmark" href="{% static 'images/log.png' %}" >
+    <link rel="Shortcut Icon" href="{% static 'images/log.png' %}" />
+
+	<style type="text/css">
+	html,
+	body {
+	    height: 100%;
+	}
+	html {
+	    display: table;
+	    margin: auto;
+	}
+	body {
+        width: 500px;
+	    display: table-cell;
+	    vertical-align: middle;
+	}
+
+	</style>
+</head>
+<body class="orange" style="opacity: 0.8;">
+	<div id="login-page" class="row">
+	    <div class="col s12 z-depth-6 card-panel">
+	      <form class="login-form" action="{% url 'design:repwd' %}" method="post">
+          {% csrf_token %}
+	        <div class="row">
+	          <div class="input-field col s12 center">
+	             <img src="{% static 'img/log.png' %}" alt="非凡策划有限公司" style="border-radius: 20px;" class="responsive-img valign profile-image-login">
+	            <p class="center login-form-text">非凡策划</p>
+	          </div>
+	        </div>
+              <div class="row margin">
+                  <div class="input-field col s12">
+                      <i class="mdi-action-lock-outline prefix"></i>
+                      <input class="validate" id="pwd" type="password" name="pwd">
+                      <label for="pwd" data-error="wrong" data-success="right" class="center-align">密码6-12</label>
+                  </div>
+              </div>
+            <div class="row margin">
+                <div class="input-field col s12">
+                    <i class="mdi-action-lock-outline prefix"></i>
+                    <input id="password-again" type="password" name="rpwd" class="validate">
+                    <label for="password-again">请再次输入密码</label>
+                </div>
+            </div>
+	        <div class="row">
+	          <div class="input-field col s12">
+	            <button type="submit" class="btn waves-effect waves-light col s12">完成</button>
+	          </div>
+	        </div>
+	        <div class="row">
+	          <div class="input-field col s6 m6 l6">
+	            <p class="margin medium-small"><a href="{% url 'design:register' %}">立刻注册!</a></p>
+	          </div>
+	          <div class="input-field col s6 m6 l6">
+	              <p class="margin right-align medium-small"><a href="{% url 'design:login' %}">登录</a></p>
+	          </div>
+	        </div>
+            <input type="hidden" name="hidden" value="{{ user.id }}">
+	      </form>
+	    </div>
+	  </div>
+
+	<script src="/static/js/jquery-3.3.1.js"></script>
+  	<!--materialize js-->
+  	<script src="/static/js/materialize.min.js"></script>
+</body>
+</html>
